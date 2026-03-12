@@ -1,0 +1,66 @@
+# C:\Users\xiaoju\Desktop\eloft-pipei\cross_matching\config\default_config.yml
+
+# 路径配置
+paths:
+  # EfficientLoFTR 代码库路径
+  eloft_root: "C:/Users/xiaoju/Desktop/eloft-pipei/EfficientLoFTR-main"
+  # 模型权重路径
+  model_weights: "C:/Users/xiaoju/Desktop/eloft-pipei/EfficientLoFTR-main/weights/eloftr_outdoor.ckpt"
+  # 基准图路径
+  base_image: "0_jizhun/5.tif"
+  # 实时图像文件夹
+  realtime_dir: "3_input/"
+  # 【新增】传感器数据路径，用于解决剧烈旋转问题
+  sensor_data: "0_jizhun/3_sensor.csv"
+  # 输出结果路径
+  output_csv: "3_output/image_info.csv"
+  output_debug_dir: "3_output/debug_images/"
+
+# 误差分析配置
+error_analysis:
+  enabled: true # 是否开启误差计算
+  ground_truth_path: "C:/Users/xiaoju/Desktop/eloft-pipei/cross_matching/0_jizhun/3.csv" # 真值文件路径
+
+# 相机与飞行参数
+camera:
+  fov: 53          # 视场角 (度)
+  aspect_ratio: [4, 3] 
+  resolution: [640, 480]  
+  image_rotation: 180 #0
+
+# 初始导航状态(WGS84) (根据 DJI_0149.JPG 的实际位置微调)
+initial_state:
+  lng_o: 108.824022  # 108.7560168
+  lat_o: 34.13831089 # 34.14985025
+  h_o: 90.0         # 飞行相对高度
+  beta_o: -6.2      # 初始航向角
+  h0: 0.0            # 起飞点地面高度
+
+# # 匹配算法参数
+# matcher:
+#   conf_threshold: 0.2 # 降低门槛以提高召回
+#   ransac_threshold: 4.0
+#   scale_q: 0.2       # 尺度校验阈值因子  
+#   mag_k: 1.1         # 搜索区域扩大系数
+#   valid_k: [0.5, 1.5] # 默认有效单应性变换系数 (a, b)[0.8, 1.2]  校验单应性矩阵的尺度范围 (a, b)，由于无人机高度变化，放宽至 0.5-1.5
+#   fine_temperature: 10.0 # 新增：精细匹配温度系数，强制设为 10.0
+
+#   # --- 新增/更新参数 ---
+#   save_matching_fig: true      # 是否保存连线匹配图 (debug_images/matching_plots)
+#   save_full_overlay: true      # 是否生成并保存“大图映射”结果
+#   full_overlay_scale: 0.3      # 大图结果的缩放比例 (0.5 表示原图 50%)
+#   output_format: "png"         # 调试图片保存格式
+
+matcher:
+  conf_threshold: 0.25 # 降低门槛以提高召回
+  ransac_threshold: 4.0
+  scale_q: 0.2       # 尺度校验阈值因子  
+  mag_k: 2.0         # 搜索区域扩大系数
+  valid_k: [0.5, 1.5] # 默认有效单应性变换系数 (a, b)[0.8, 1.2]  校验单应性矩阵的尺度范围 (a, b)，由于无人机高度变化，放宽至 0.5-1.5
+  fine_temperature: 10.0 # 新增：精细匹配温度系数，强制设为 10.0
+
+  # --- 新增/更新参数 ---
+  save_matching_fig: true      # 是否保存连线匹配图 (debug_images/matching_plots)
+  save_full_overlay: true      # 是否生成并保存“大图映射”结果
+  full_overlay_scale: 0.3      # 大图结果的缩放比例 (0.5 表示原图 50%)
+  output_format: "png"         # 调试图片保存格式
